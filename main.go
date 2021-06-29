@@ -14,29 +14,26 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("Marvel API URL Keygen")
+	fmt.Println("Marvel API Hash Gen")
 	fmt.Println("---------------------")
 
-	for {
-		fmt.Println("Enter your public key: ")
-		pk, _ := reader.ReadString('\n')
-		pk = strings.Replace(pk, "\n", "", -1)
+	fmt.Println("Enter your public key: ")
+	pk, _ := reader.ReadString('\n')
+	pk = strings.Replace(pk, "\n", "", -1)
 
-		fmt.Println("Enter your private key: ")
-		pvk, _ := reader.ReadString('\n')
-		pvk = strings.Replace(pvk, "\n", "", -1)
+	fmt.Println("Enter your private key: ")
+	pvk, _ := reader.ReadString('\n')
+	pvk = strings.Replace(pvk, "\n", "", -1)
 
-		r := strconv.Itoa(rand.Int())
+	r := strconv.Itoa(rand.Int())
 
-		h := md5.New()
+	h := md5.New()
 
-		h.Write([]byte(r + pvk + pk))
+	h.Write([]byte(r + pvk + pk))
 
-		bs := h.Sum(nil)
+	bs := h.Sum(nil)
 
-		fmt.Println("Your timestamp is:")
-		fmt.Println(r)
-		fmt.Println("Your key is: ")
-		fmt.Printf("%x\n", bs)
-	}
+	fmt.Println("Your url is:")
+	fmt.Printf("?ts=%s&apikey=%s&hash=%x\n", r, pk, bs)
+
 }
